@@ -11,7 +11,6 @@ Source1: http://wmii.cat-v.org/uploads/WMI/wmipaper.pdf.bz2
 Patch0: 01-x-terminal-emulator.dpatch
 Patch1: 02-cflags.dpatch
 Patch2: 03-font.dpatch
-BuildRoot: %{_tmppath}/root-%{name}-%{version}
 BuildRequires: gcc
 BuildRequires: freetype2-devel
 BuildRequires: autoconf
