@@ -76,7 +76,7 @@ sed -i -e "/^LIBDIR/s|=.*|= /usr/lib64|" config.mk
 
 sed -i \
     -e "/^PREFIX/s|=.*|= /usr|" \
-    -e "/^ETC/s|=.*|= /etc/x11|" \
+    -e "/^ETC/s|=.*|= /etc/X11|" \
     config.mk
 
 make PREFIX=%{_prefix} CONFPREFIX=%{_sysconfdir}/X11 MANPREFIX=%{_mandir} LIBIXP=/usr/lib/libixp.a STATIC=""
