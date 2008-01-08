@@ -8,7 +8,6 @@ Group: Graphical desktop/Other
 URL: http://wmii.cat-v.org/
 Source: http://wmii.cat-v.org/download/wmii-%{version}.tar.bz2
 Source1: http://wmii.cat-v.org/uploads/WMI/wmipaper.pdf.bz2
-Patch0: 01-x-terminal-emulator.dpatch
 Patch1: 02-cflags.dpatch
 Patch2: 03-font.dpatch
 BuildRoot: %{_tmppath}/root-%{name}-%{version}
@@ -21,7 +20,7 @@ BuildRequires: python-pyrex
 BuildRequires: X11-devel
 BuildRequires: X11-static-devel
 BuildRequires: libixp-devel
-Requires: xterm
+Requires: xterm xmessage dwm-tools
 
 
 %description
@@ -67,16 +66,20 @@ one window manager.
 %setup -q -n wmii-%{version}
 bunzip2 -c %{SOURCE1} > wmipaper.pdf
 
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
 %ifarch x86_64
-perl -pi -e "s|^X11LIB.*|X11LIB=/usr/X11R6/lib64|" $RPM_BUILD_DIR/%name-%realversion/config.mk
+sed -i -e "/^LIBDIR/s|=.*|= /usr/lib64|" config.mk
 %endif
 
-make PREFIX=%{_prefix} CONFPREFIX=%{_sysconfdir} MANPREFIX=%{_mandir} LIBIXP=/usr/lib/libixp.a STATIC=""
+sed -i \
+    -e "/^PREFIX/s|=.*|= /usr|" \
+    -e "/^ETC/s|=.*|= /etc/x11|" \
+    config.mk
+
+make PREFIX=%{_prefix} CONFPREFIX=%{_sysconfdir}/X11 MANPREFIX=%{_mandir} LIBIXP=/usr/lib/libixp.a STATIC=""
 
 %install
 %{__rm} -rf %{buildroot}
@@ -99,8 +102,8 @@ SCRIPT:
 exec %{_bindir}/%name
 EOF
 
-%clean
-%{__rm} -rf ${buildroot}
+#%clean
+#%{__rm} -rf ${buildroot}
 
 %post
 %make_session
