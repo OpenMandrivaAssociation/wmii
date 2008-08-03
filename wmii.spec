@@ -3,7 +3,7 @@ Summary: Window Manager Improved 2, a X11 window manager for hackers
 Name: wmii
 Version: 3.6
 License: MIT
-Release: %mkrel 4
+Release: %mkrel 5
 Group: Graphical desktop/Other
 URL: http://wmii.cat-v.org/
 Source: http://wmii.cat-v.org/download/wmii-%{version}.tar.bz2
