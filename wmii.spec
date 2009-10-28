@@ -3,13 +3,14 @@ Summary: Window Manager Improved 2, a X11 window manager for hackers
 Name: wmii
 Version: 3.6
 License: MIT
-Release: %mkrel 6
+Release: %mkrel 7
 Group: Graphical desktop/Other
 URL: http://wmii.cat-v.org/
 Source: http://wmii.cat-v.org/download/wmii-%{version}.tar.bz2
 Source1: http://wmii.cat-v.org/uploads/WMI/wmipaper.pdf.bz2
 Patch1: 02-cflags.dpatch
 Patch2: 03-font.dpatch
+Patch3: 04-libixp.dpatch
 BuildRoot: %{_tmppath}/root-%{name}-%{version}
 BuildRequires: gcc
 BuildRequires: freetype2-devel
@@ -68,6 +69,7 @@ bunzip2 -c %{SOURCE1} > wmipaper.pdf
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0
 
 %build
 %ifarch x86_64
