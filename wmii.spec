@@ -3,7 +3,7 @@ Summary: Window Manager Improved 2, a X11 window manager for hackers
 Name: wmii
 Version: 3.6
 License: MIT
-Release: %mkrel 7
+Release: %mkrel 8
 Group: Graphical desktop/Other
 URL: http://wmii.cat-v.org/
 Source: http://wmii.cat-v.org/download/wmii-%{version}.tar.bz2
@@ -13,13 +13,10 @@ Patch2: 03-font.dpatch
 Patch3: 04-libixp.dpatch
 BuildRoot: %{_tmppath}/root-%{name}-%{version}
 BuildRequires: gcc
-BuildRequires: freetype2-devel
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: cairo-devel
 BuildRequires: python-pyrex
-BuildRequires: X11-devel
-BuildRequires: X11-static-devel
+BuildRequires: libx11-devel
+BuildRequires: libxt-devel
+BuildRequires: libxext-devel
 BuildRequires: libixp-devel
 Requires: xterm xmessage dwm-tools
 
