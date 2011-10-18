@@ -1,99 +1,71 @@
+%define	changeset	f3d88385ea7c
 
 Summary: Window Manager Improved 2, a X11 window manager for hackers
 Name: wmii
-Version: 3.6
+Version: 3.10
 License: MIT
-Release: %mkrel 8
+Release: %mkrel -c b1 1
 Group: Graphical desktop/Other
-URL: http://wmii.cat-v.org/
-Source: http://wmii.cat-v.org/download/wmii-%{version}.tar.bz2
-Source1: http://wmii.cat-v.org/uploads/WMI/wmipaper.pdf.bz2
-Patch1: 02-cflags.dpatch
-Patch2: 03-font.dpatch
-Patch3: 04-libixp.dpatch
-BuildRoot: %{_tmppath}/root-%{name}-%{version}
-BuildRequires: gcc
+URL: http://wmii.suckless.org/
+Source0: hg.suckless.org/wmii/archive/%{changeset}.tar.gz
+
+BuildRequires: freetype2-devel
+BuildRequires: cairo-devel
 BuildRequires: python-pyrex
-BuildRequires: libx11-devel
-BuildRequires: libxt-devel
-BuildRequires: libxext-devel
-BuildRequires: libixp-devel
-Requires: xterm xmessage dwm-tools
+BuildRequires: X11-devel
+BuildRequires: libixp-devel > 0.5
+BuildRequires: python-devel
+Requires:	xterm
+Requires:	xmessage 
+Requires:	dwm-tools
 
 
 %description
-WMI is a new lightweight window manager for X11, which attempts to
-combine the best features of LarsWM, Ion, evilwm and ratpoison into
-one window manager.
+WMii is a dynamic window manager for X11.  It supports classic and tiled 
+window management with extended keyboard, mouse, and 9P-based remote control.  
+It consists of the wmii window manager and the wmiir the remote access utility.
 
-window manager improved 2 - is the next generation of the WMI
-project. Due to a complete rewrite it is highly modularized and
-uses a new configuration and inter-process communication interface
-which is oriented on the 9p protocol of the plan9 operating system.
-It achieves following goals:
+%package python
+Summary: Window Manager Improved 2 python files
+Group: Graphical desktop/Other
 
-reduction of compile time
-reduction of memory usage
-reduction of lines of code
-performance improvements
-improved rendering capabilities (optional cairo)
-improved configuration and IPC interface (libixp)
-modularized components
-
-wmi was a single binary. Due to the modularization wmii consists of
-following binaries:
-
-wmii (core window manager)
-wmiinput (input mode)
-wmibar (generic bar, also usable for basic menus)
-wmipager (workspace pager)
-wmir (next generation wmiremote)
-wmirat (the rat - shortcut handler)
+%description python
+Python files for %{name}.
 
 %package devel
 Summary: Window Manager Improved 2 devel files
 Group: Development/C
 
 %description devel
-WMI is a new lightweight window manager for X11, which attempts to
-combine the best features of LarsWM, Ion, evilwm and ratpoison into
-one window manager.
+Development files for %{name}.
 
 
 %prep
-%setup -q -n wmii-%{version}
-bunzip2 -c %{SOURCE1} > wmipaper.pdf
-
-%patch1 -p1
-%patch2 -p1
-%patch3 -p0
+%setup -qn %{name}-%{changeset}
 
 %build
-%ifarch x86_64
-sed -i -e "/^LIBDIR/s|=.*|= /usr/lib64|" config.mk
-%endif
-
 sed -i \
     -e "/^PREFIX/s|=.*|= /usr|" \
-    -e "/^ETC/s|=.*|= /etc/X11|" \
+    -e "/ETC/s|=.*|= /etc/X11|" \
+%ifarch x86_64
+	-e "s|/usr/lib|/usr/lib64|g" \
+	-e "/ LIBDIR/s|=.*|= /usr/lib64|" \
+%endif
     config.mk
 
-make PREFIX=%{_prefix} CONFPREFIX=%{_sysconfdir}/X11 MANPREFIX=%{_mandir} LIBIXP=/usr/lib/libixp.a STATIC=""
+%make
 
 %install
-%{__rm} -rf %{buildroot}
-
-make install PREFIX=%{buildroot}/usr ETC=%{buildroot}/etc/X11 LIBIXP=/usr/lib/libixp.a
+%makeinstall_std
 
 # install devel files
-mkdir -p $RPM_BUILD_ROOT%{_libdir}
-mkdir -p $RPM_BUILD_ROOT%{_includedir}
-find lib* -name '*.a' -exec cp {} $RPM_BUILD_ROOT%{_libdir} \; -print
-find lib* -name '*.h' -exec cp {} $RPM_BUILD_ROOT%{_includedir} \; -print
+mkdir -p %{buildroot}%{_includedir}
+find lib* -name '*.a' -exec cp {} %{buildroot}%{_libdir} \; -print
+find lib* -name '*.h' -exec cp {} %{buildroot}%{_includedir} \; -print
 
 # Install generated scripts to hook up WMI into gdm, xdm, and Co.
-%__mkdir -p $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d
-%__cat >    $RPM_BUILD_ROOT%_sysconfdir/X11/wmsession.d/19%name << EOF
+mkdir -p %{buildroot}%_sysconfdir/X11/wmsession.d
+cat >    %{buildroot}%_sysconfdir/X11/wmsession.d/19%name << EOF
 NAME=%name
 EXEC=%{_bindir}/%name
 DESC=%summary
@@ -101,26 +73,31 @@ SCRIPT:
 exec %{_bindir}/%name
 EOF
 
-#%clean
-#%{__rm} -rf ${buildroot}
 
+%if %mdkversion < 200900
 %post
 %make_session
 
 %postun
 %make_session
+%endif
 
 %files
 %defattr(0644, root, root, 0755)
+%doc LICENSE README 
 %attr(0755, root, root) %{_bindir}/*
-%{_mandir}/man*/*
-%dir %_sysconfdir/X11/wmii-3.5
-%attr(0755, root, root) %config(noreplace) %_sysconfdir/X11/wmii-3.5/*
+%{_mandir}/man1/*
+%dir %_sysconfdir/X11/wmii-hg/
+%attr(0755, root, root) %config(noreplace) %_sysconfdir/X11/%{name}-hg/*
 %config(noreplace) %_sysconfdir/X11/wmsession.d/19%name
-%doc LICENSE README wmipaper.pdf
+
+%files python
+%defattr(0644, root, root, 0755)
+%py_puresitedir
 
 %files devel
 %defattr(0644, root, root, 0755)
 %{_libdir}/*.a
+%{_libdir}/*.so
 %{_includedir}/*
-%doc LICENSE README
+
