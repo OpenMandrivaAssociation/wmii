@@ -101,3 +101,93 @@ EOF
 %{_libdir}/*.so
 %{_includedir}/*
 
+
+
+%changelog
+* Tue Oct 18 2011 Matthew Dawkins <mattydaw@mandriva.org> 3.10-0.b1.1mdv2012.0
++ Revision: 705294
+- new version 3.10 b1 changeset f3d88385ea7c
+  dropped wmipaper.pdf source
+  patches 02, 03, & 04
+  cleaned up spec
+  fixed build for 64bit
+
+* Tue Feb 01 2011 Funda Wang <fwang@mandriva.org> 3.6-8
++ Revision: 634813
+- simplify BR
+
+* Wed Oct 28 2009 Rémy Clouard <shikamaru@mandriva.org> 3.6-7mdv2010.0
++ Revision: 459793
+- fix build due to libixp changes
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+* Sun Aug 03 2008 Thierry Vignaud <tv@mandriva.org> 3.6-5mdv2009.0
++ Revision: 262054
+- rebuild
+
+* Wed Jul 30 2008 Thierry Vignaud <tv@mandriva.org> 3.6-4mdv2009.0
++ Revision: 256184
+- rebuild
+
+* Tue Jan 08 2008 Jérôme Soyer <saispo@mandriva.org> 3.6-2mdv2008.1
++ Revision: 146959
+- Bump Release
+- Fix Caps
+- Fix sed
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Thu Dec 13 2007 Jérôme Soyer <saispo@mandriva.org> 3.6-1mdv2008.1
++ Revision: 119211
+- New release
+- Add three patchs from debian
+- Fix make and make install
+- Disable parralel build
+
+
+* Thu May 25 2006 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3-1mdv2007.0
+- 3
+
+* Sun May 14 2006 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3-0.rc5.1mdk
+- 3 rc5
+
+* Fri May 12 2006 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3-0.rc4.1mdk
+- 3 rc4
+
+* Tue May 09 2006 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3-0.rc3.1mdk
+- 3 rc 3
+
+* Sat May 06 2006 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3-0.rc2.1mdk
+- 3 rc2
+- rediff patch0
+
+* Tue May 02 2006 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 3-0.rc1.1mdk
+- 3 rc1
+- no more require 9base
+
+* Tue Dec 06 2005 Antoine Ginies <aginies@mandriva.com> 0.20051114-4mdk
+- fix x86_64 build
+
+* Mon Dec 05 2005 Antoine Ginies <aginies@mandriva.com> 0.20051114-3mdk
+- add buildrequires libxorg-x11-static-devel
+
+* Mon Dec 05 2005 Antoine Ginies <aginies@mandriva.com> 0.20051114-2mdk
+- add missing Buildrequires libxorg-x11-devel
+
+* Mon Dec 05 2005 Antoine Ginies <aginies@.mandriva.com> 0.20051114-1mdk
+- 20051114 release
+- add 9base requires
+
+* Wed Nov 30 2005 Antoine Ginies <aginies@n3.mandriva.com> 0.20050730-1mdk
+- supposed stable release Boyd [2005-07-30]
+- need to relocate all wmii scripts
+
+* Fri May 27 2005 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 0.20050526-1mdk
+- initial contrib
+
