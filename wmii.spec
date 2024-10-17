@@ -6,7 +6,7 @@ Version: 3.10
 License: MIT
 Release: %mkrel -c b1 1
 Group: Graphical desktop/Other
-URL: http://wmii.suckless.org/
+URL: https://wmii.suckless.org/
 Source0: hg.suckless.org/wmii/archive/%{changeset}.tar.gz
 
 BuildRequires: freetype2-devel
