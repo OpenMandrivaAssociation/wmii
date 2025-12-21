@@ -9,6 +9,7 @@ Group: Graphical desktop/Other
 URL: https://wmii.suckless.org/
 Source0: hg.suckless.org/wmii/archive/%{changeset}.tar.gz
 
+BuildRequires:	make
 BuildRequires: freetype2-devel
 BuildRequires: cairo-devel
 BuildRequires: python-pyrex
