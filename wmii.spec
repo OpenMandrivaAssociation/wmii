@@ -4,7 +4,7 @@ Summary: Window Manager Improved 2, a X11 window manager for hackers
 Name: wmii
 Version: 3.10
 License: MIT
-Release: %mkrel -c b1 1
+Release: -c b1 1.1
 Group: Graphical desktop/Other
 URL: https://wmii.suckless.org/
 Source0: hg.suckless.org/wmii/archive/%{changeset}.tar.gz
